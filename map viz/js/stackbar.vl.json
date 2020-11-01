@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width": 800,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
+  },
+  "mark": {"type": "bar", "cornerRadiusTopLeft": 3, "cornerRadiusTopRight": 3},
+  "encoding": {
+    "x": {"timeUnit": "year", "field": "Year", "type": "ordinal"},
+    "y": {"aggregate": "sum", "field": "Happiness Score", "stack": "normalize"},
+    "color": {"field": "Region"}
+  },
+  "config": {}
+}
