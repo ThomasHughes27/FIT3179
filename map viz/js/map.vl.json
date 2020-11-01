@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
   "title": "World Happiness",
-  "width": 800,
-  "height": 600,
+  "width": 1000,
+  "height": 1000,
   "data": {
     "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
     "format": {"type": "topojson", "feature": "worldmap"}
@@ -19,7 +19,7 @@
       }
     }
   ],
-  "projection": {"type": "equirectangular"},
+  "projection": {"type": "equalEarth"},
   "mark": {"type": "geoshape"},
   "encoding": {
     "color": {
