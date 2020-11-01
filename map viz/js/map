@@ -1,0 +1,36 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "title": "World Happiness",
+  "width": 800,
+  "height": 600,
+  "data": {
+    "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
+    "format": {"type": "topojson", "feature": "worldmap"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.name",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
+        },
+        "key": "Country",
+        "fields": ["Happiness Rank"]
+      }
+    }
+  ],
+  "projection": {"type": "equirectangular"},
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Happiness Rank",
+      "type": "quantitative",
+      "scale": {"type": "ordinal"}
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "Country"},
+      {"field": "Happiness Rank", "type": "quantitative"}
+    ]
+  },
+  "config": {}
+}
