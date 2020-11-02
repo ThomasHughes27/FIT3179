@@ -1,10 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
   "title": "World Happiness Scores V GDPPC Contribution to Happiness on Average Across 2015-2019",
-  "repeat": {"column": ["Happiness Score", "GDP per capita"]},
+  "repeat": {"row": ["Happiness Score", "GDP per capita"]},
   "resolve": {"scale": {"color": "independent"}},
   "spec": {
-    "width": 500,
+    "width": 700,
     "height": 350,
     "data": {
       "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
@@ -26,7 +26,7 @@
     "mark": {"type": "geoshape"},
     "encoding": {
       "color": {
-        "field": {"repeat": "column"},
+        "field": {"repeat": "row"},
         "type": "quantitative",
         "scale": {"type": "ordinal"}
       },
