@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "width": 500,
-  "height": 400,
+  "width": 700,
+  "height": 500,
   "title": "GDP per capita V Social Support per Region per Year",
   "data": {
     "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
@@ -11,14 +11,26 @@
       "name": "Year_selection",
       "bind": {
         "input": "select",
-        "options": ["2015", "2016", "2017", "2018", "2019"],
-        "labels": ["2015", "2016", "2017", "2018", "2019"],
-        "name": "Year Selection: "
+        "options": [null, "2015", "2016", "2017", "2018", "2019"],
+        "labels": ["Show All", "2015", "2016", "2017", "2018", "2019"],
+        "name": "Year Selection(select to view annotations): "
+      }
+    },
+    {
+      "name": "Happiness_score_above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 7,
+        "step": 1,
+        "name": "Minimum Happiness Score: "
       }
     }
   ],
   "transform": [
-    {"filter": "Year_selection == null || datum.Year == Year_selection"}
+    {"filter": "Year_selection == null || datum.Year == Year_selection"},
+    {"filter": "datum['Happiness Score'] > Happiness_score_above"}
   ],
   "encoding": {
     "x": {
@@ -26,7 +38,11 @@
       "type": "quantitative",
       "title": "GDP per capita"
     },
-    "y": {"field": "Social support", "type": "quantitative"}
+    "y": {
+      "field": "Social support",
+      "type": "quantitative",
+      "title": "Social Support"
+    }
   },
   "layer": [
     {
@@ -39,7 +55,14 @@
       },
       "mark": "circle",
       "encoding": {
-        "color": {"field": "Region", "type": "nominal"},
+        "color": {
+          "field": "Region",
+          "type": "nominal",
+          "condition": {
+            "test": "datum['GDP per capita'] === null || datum['Social support'] === null",
+            "value": "#aaa"
+          }
+        },
         "opacity": {
           "condition": {"selection": "region_highlight", "value": 0.8},
           "value": 0.1
@@ -65,18 +88,18 @@
     {
       "mark": {
         "type": "text",
-        "align": "right",
+        "align": "left",
         "baseline": "middle",
-        "dx": -12,
+        "dx": -10,
         "fontSize": 11.5,
-        "fontStyle": "italic"
+        "fontStyle": "bold"
       },
       "encoding": {
         "text": {"field": "Country", "type": "nominal"},
         "color": {"value": "black"},
         "opacity": {
           "condition": {
-            "test": "datum['Country'] == 'Central African Rep.' || datum['Country'] == 'Dem. Rep. Congo' || datum['Country'] == 'Australia' || datum['Country'] == 'New Zealand' || datum['Country'] == 'Italy' || datum['Country'] == 'Yemen' ||  datum['Country'] == 'United States'",
+            "test": "Year_selection != null & datum['Country'] == 'Denmark' || Year_selection != null & datum['Country'] == 'Central African Rep.' || Year_selection != null & datum['Country'] == 'Dem. Rep. Congo' || Year_selection != null & datum['Country'] == 'Qatar' || Year_selection != null & datum['Country'] == 'United Arab Emirates' & datum['Year'] == '2018' || Year_selection != null & datum['Country'] == 'Uzbekistan' || Year_selection != null & datum['Country'] == 'India'",
             "value": 1
           },
           "value": 0
