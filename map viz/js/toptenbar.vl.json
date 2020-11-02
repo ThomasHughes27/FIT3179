@@ -21,13 +21,38 @@
     {"filter": "Year_selection == null || datum.Year == Year_selection"},
     {"filter": "datum['Happiness Rank'] <= 10"}
   ],
-  "mark": "bar",
+  "selection": {
+    "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+    "select": {"type": "multi"}
+  },
+  "mark": {
+    "type": "bar",
+    "fill": "#4C78A8",
+    "stroke": "black",
+    "cursor": "pointer"
+  },
   "encoding": {
     "x": {"field": "Happiness Score", "type": "quantitative"},
     "y": {
       "field": "Country",
       "type": "nominal",
-      "sort": {"field": "Happiness Score", "op": "max", "order": "descending"}
+      "sort": {"field": "Happiness Score", "op": "max", "order": "ascending"}
+    },
+    "fillOpacity": {
+      "condition": {"selection": "select", "value": 1},
+      "value": 0.3
+    },
+    "strokeWidth": {
+      "condition": [
+        {
+          "test": {
+            "and": [{"selection": "select"}, "length(data(\"select_store\"))"]
+          },
+          "value": 2
+        },
+        {"selection": "highlight", "value": 1}
+      ],
+      "value": 0
     },
     "tooltip": [
       {"field": "Country", "type": "nominal"},
@@ -36,5 +61,5 @@
       {"field": "Happiness Score", "type": "quantitative"}
     ]
   },
-  "config": {}
+  "config": {"scale": {"bandPaddingInner": 0.2}}
 }
