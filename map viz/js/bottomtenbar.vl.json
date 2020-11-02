@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "width": 500,
+  "height": 400,
+  "title": "Approximate Bottom 10 Happiness Scores each Year",
+  "data": {
+    "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
+  },
+  "params": [
+    {
+      "name": "Year_selection",
+      "bind": {
+        "input": "select",
+        "options": [null, "2015", "2016", "2017", "2018", "2019"],
+        "labels": ["Show All", "2015", "2016", "2017", "2018", "2019"],
+        "name": "Year Selection: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "Year_selection == null || datum.Year == Year_selection"},
+    {"filter": "datum['Happiness Rank'] >= 146"}
+  ],
+  "selection": {
+    "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+    "select": {"type": "multi"}
+  },
+  "mark": {
+    "type": "bar",
+    "fill": "#4C78A8",
+    "stroke": "black",
+    "cursor": "pointer"
+  },
+  "encoding": {
+    "x": {"field": "Happiness Score", "type": "quantitative"},
+    "y": {
+      "field": "Country",
+      "type": "nominal",
+      "sort": {"field": "Happiness Score", "op": "max", "order": "ascending"}
+    },
+    "fillOpacity": {
+      "condition": {"selection": "select", "value": 1},
+      "value": 0.3
+    },
+    "strokeWidth": {
+      "condition": [
+        {
+          "test": {
+            "and": [{"selection": "select"}, "length(data(\"select_store\"))"]
+          },
+          "value": 2
+        },
+        {"selection": "highlight", "value": 1}
+      ],
+      "value": 0
+    },
+    "tooltip": [
+      {"field": "Country", "type": "nominal"},
+      {"field": "Region", "type": "nominal"},
+      {"field": "Happiness Rank", "type": "quantitative"},
+      {"field": "Happiness Score", "type": "quantitative"}
+    ]
+  },
+  "config": {"scale": {"bandPaddingInner": 0.2}}
+}
