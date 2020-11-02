@@ -36,7 +36,7 @@
     "y": {
       "field": "Country",
       "type": "nominal",
-      "sort": {"field": "Happiness Score", "op": "max", "order": "ascending"}
+      "sort": {"field": "Happiness Score", "op": "max", "order": "descending"}
     },
     "fillOpacity": {
       "condition": {"selection": "select", "value": 1},
