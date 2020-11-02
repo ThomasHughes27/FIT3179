@@ -4,8 +4,8 @@
   "repeat": {"column": ["Happiness Score", "GDP per capita"]},
   "resolve": {"scale": {"color": "independent"}},
   "spec": {
-    "width": 800,
-    "height": 450,
+    "width": 700,
+    "height": 400,
     "data": {
       "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
       "format": {"type": "topojson", "feature": "worldmap"}
