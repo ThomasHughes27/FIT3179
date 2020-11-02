@@ -1,36 +1,42 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "title": "World Happiness",
-  "width": 1000,
-  "height": 1000,
-  "data": {
-    "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
-    "format": {"type": "topojson", "feature": "worldmap"}
-  },
-  "transform": [
-    {
-      "lookup": "properties.name",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
-        },
-        "key": "Country",
-        "fields": ["Happiness Rank"]
-      }
-    }
-  ],
-  "projection": {"type": "equalEarth"},
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "Happiness Rank",
-      "type": "quantitative",
-      "scale": {"type": "ordinal"}
+  "title": "World Happiness Scores V GDPPC Contribution to Happiness on Average Across 2015-2019",
+  "repeat": {"row": ["Happiness Score", "GDP per capita"]},
+  "resolve": {"scale": {"color": "independent"}},
+  "spec": {
+    "width": 800,
+    "height": 600,
+    "data": {
+      "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/js/worldmap.topojson",
+      "format": {"type": "topojson", "feature": "worldmap"}
     },
-    "tooltip": [
-      {"field": "properties.name", "type": "nominal", "title": "Country"},
-      {"field": "Happiness Rank", "type": "quantitative"}
-    ]
+    "transform": [
+      {
+        "lookup": "properties.name",
+        "from": {
+          "data": {
+            "url": "https://raw.githubusercontent.com/ThomasHughes27/FIT3179/main/map%20viz/data/CLEANED_ALLYEARS.csv"
+          },
+          "key": "Country",
+          "fields": ["Happiness Score", "GDP per capita", "Happiness Rank"]
+        }
+      }
+    ],
+    "projection": {"type": "equalEarth"},
+    "mark": {"type": "geoshape"},
+    "encoding": {
+      "color": {
+        "field": {"repeat": "row"},
+        "type": "quantitative",
+        "scale": {"type": "ordinal"}
+      },
+      "tooltip": [
+        {"field": "properties.name", "type": "nominal", "title": "Country"},
+        {"field": "Happiness Score", "type": "quantitative"},
+        {"field": "GDP per capita", "type": "quantitative"},
+        {"field": "Happiness Rank", "type": "quantitative"}
+      ]
+    }
   },
   "config": {}
 }
